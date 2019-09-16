@@ -1,0 +1,20 @@
+.pie{
+  background-color: var(--secondary-color);
+  color:#aaa;
+}
+
+.pie .copyright{
+  margin-bottom: 0px;
+}
+
+.pie div.row p:not(:first-child){
+  font-size: 0.8rem;
+}
+
+.pie a{
+  color:#aaa;
+}
+
+.pie p:first-child{
+  color:white;
+}

@@ -1,0 +1,39 @@
+<div id="imagen-fondo" style="background: url('assets/usc.png') no-repeat center; background-size:cover">
+  <div class="main">
+    <div class="mx-4">
+      <h2 class="text-center display-4 texto-buscador titulo-buscador">Todos los apuntes de la USC</h2>
+      <p class="text-center texto-buscador">Todos los apuntes compartidos por alumnos de la USC gratuitamente</p>
+      <div class="form-group has-search">
+        <input id="buscador" type="search" class="form-control form-control-lg" placeholder="Busca asignaturas o apuntes">
+      </div>
+    </div>
+  </div>
+</div>
+<section class="p-3 py-5" style="background-color: white">
+  <app-ultimos-apuntes></app-ultimos-apuntes>
+</section>
+<section class="p-3 py-5" style="background-color:#f2f2f2">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="primary_text">Estás bien acompañado</h2>
+      <p class="h5" style="font-weight: normal;">En ApuntesUSC tienes todo el material que otros compañeros han decidido compartir de forma altruísta. Podrás descargarlos gratuitamente y sin límites</p>
+    </div>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <img style="max-height:200px" src="assets/document.svg">
+        <p class="primary_text mb-0 mt-3" style="font-size:30px">{{cantidadApuntes}}</p>
+        <p>Apuntes</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <img style="max-height:200px" src="assets/scholarship.svg">
+        <p class="primary_text mb-0 mt-3" style="font-size:30px">{{cantidadCarreras}}</p>
+        <p>Carreras</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <img style="max-height:200px" src="assets/library.svg">
+        <p class="primary_text mb-0 mt-3" style="font-size:30px">{{cantidadAsignaturas}}</p>
+        <p>Asignaturas</p>
+      </div>
+    </div>
+  </div>
+</section>

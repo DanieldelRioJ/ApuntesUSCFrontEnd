@@ -1,0 +1,22 @@
+.icono{
+  height: 40px;
+}
+
+ol.breadcrumb{
+  background-color:transparent;
+}
+
+.foto-apunte{
+  height: 70px;
+  width: 80px;
+  background-size: cover;
+}
+
+li.apunte-lista-item{
+  border-color: #f2f2f2 !important;
+  color:black;
+  border-bottom:1px solid;
+}
+li.apunte-lista-item:hover{
+  background-color: #f2f2f2;
+}

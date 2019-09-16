@@ -1,0 +1,31 @@
+<div class="container mt-3">
+  <h2 class="text-center primary_text">Apuntes de <span *ngIf="grado">{{grado.name}}</span></h2>
+  <mat-tab-group mat-align-tabs="center" *ngIf="asignaturas">
+    <mat-tab *ngFor="let listaAsignaturas of asignaturas; index as i" label="{{i+1}}º Curso">
+      <div class="row pt-3" style="width:100%">
+        <ul class="col-md-6">
+          <li *ngFor="let asignatura of listaAsignaturas | slice:0:listaAsignaturas.length/2">
+            <a class="p-2 row apunte" routerLink="/subject/{{asignatura.id}}/classNotes">
+              <img src="assets/folder.svg" alt="folder icon" class="icono pl-2">
+              <div class="pl-2 pr-0 col-10">
+                <p class="mb-0 p-0"><span class="pl-2" matBadge="{{asignatura.classNotesQuantity}}" [matBadgeColor]="[asignatura.classNotesQuantity]>0 ? '' : 'accent'" matBadgeOverlap="false" matBadgePosition="before">{{asignatura.name}}</span></p>
+                <small class="pl-2">{{asignatura.id}}</small>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <ul class="col-md-6">
+          <li *ngFor="let asignatura of listaAsignaturas | slice:listaAsignaturas.length/2:listaAsignaturas.length">
+            <a class="p-2 row apunte" routerLink="/subject/{{asignatura.id}}/classNotes">
+              <img src="assets/folder.svg" alt="folder icon" class="icono pl-2">
+              <div class="pl-2 pr-0 col-10">
+                <p class="mb-0 p-0"><span class="pl-2" matBadge="{{asignatura.classNotesQuantity}}" [matBadgeColor]="[asignatura.classNotesQuantity]>0 ? '' : 'accent'" matBadgeOverlap="false" matBadgePosition="before">{{asignatura.name}}</span></p>
+                <small class="pl-2">{{asignatura.id}}</small>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

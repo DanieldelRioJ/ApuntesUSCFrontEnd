@@ -1,0 +1,99 @@
+<button type="button" class="mdc-fab" aria-label="Favorite" matTooltip="Subir apuntes"  data-toggle="modal" data-target="#subirApuntesModal">
+  <i class="fas fa-cloud-upload-alt"></i>
+</button>
+
+<div id="subirApuntesModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="subirApuntesForm" (ngSubmit)="subir()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Subir apuntes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <mat-form-field  appearance="outline" class="col-12">
+                  <mat-label>Selecciona apuntes</mat-label>
+                  <ngx-mat-file-input  multiple (change)="archivoSubida.files = $event.target.files" formControlName="requiredfile" multiple placeholder="Basic outline placeholder" [accept]="'file/*'"></ngx-mat-file-input>
+                  <mat-icon fontSet="fas" fontIcon="fa-file" matSuffix></mat-icon>
+                  <mat-error *ngIf="subirApuntesForm.get('requiredfile').hasError('required')">
+                    Por favor, elige al menos 1 archivo
+                  </mat-error>
+                  <mat-error *ngIf="subirApuntesForm.get('requiredfile').hasError('maxContentSize')">
+                    El tamaño máximo de todos los archivos es de {{formDoc.get('requiredfile')?.getError('maxContentSize').maxSize | byteFormat}} ({{formDoc.get('requiredfile')?.getError('maxContentSize').actualSize
+                    | byteFormat}}).
+                  </mat-error>
+                </mat-form-field>
+
+            </div>
+            <div class="row">
+              <mat-form-field class="col-12">
+                <input readonly matInput [matDatepicker]="picker"  required [(ngModel)]="archivoSubida.date" (click)="picker.open()" placeholder="Fecha aproximada de apuntes" [ngModelOptions]="{standalone: true}">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker required></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field class="col-12">
+                <mat-label>Selecciona un tipo</mat-label>
+                <mat-select [(ngModel)]="archivoSubida.type" required [ngModelOptions]="{standalone: true}">
+                  <mat-option *ngFor="let tipo of tipoApuntes" [value]="tipo.id">{{tipo.type}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field class="mt-0 col-md-4">
+                <mat-label>Selecciona una rama</mat-label>
+                <mat-select [(value)]="ramaSeleccionada"  (selectionChange)=nuevaRamaSeleccionada($event)>
+                  <mat-option>Todas las ramas</mat-option>
+                  <mat-option *ngFor="let rama of ramas" [value]="rama.id">{{rama.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class=" col-md-4">
+                <mat-label>Selecciona una carrera</mat-label>
+                <mat-select [(value)]="carreraSeleccionada" (selectionChange)="nuevoGradoSeleccionado($event)">
+                  <mat-option>Todas los grados</mat-option>
+                  <ng-container *ngIf="!ramaSeleccionada"> <!-- Si no se ha seleccionado rama mostramos todas las carreras -->
+                    <mat-optgroup *ngFor="let degree of degreeMap | keyvalue" [label]="degree.key">
+                      <mat-option *ngFor="let degreeObject of degree.value" [value]="degreeObject.id">
+                        {{degreeObject.name}}
+                      </mat-option>
+                    </mat-optgroup>
+                  </ng-container>
+                  <ng-container *ngIf="ramaSeleccionada">
+                    <mat-option *ngFor="let degreeObject of grados" [value]="degreeObject.id">
+                      {{degreeObject.name}}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <mat-label>Selecciona una asignatura</mat-label>
+                <mat-select [(ngModel)]="archivoSubida.subject" required [ngModelOptions]="{standalone: true}">
+                  <mat-optgroup *ngFor="let listaDeAsignaturas of asignaturas; let i = index" [label]="(i+1)+'º Curso'">
+                    <mat-option *ngFor="let asignatura of listaDeAsignaturas" [value]="asignatura.id">
+                      {{asignatura.name}}
+                    </mat-option>
+                  </mat-optgroup>
+                </mat-select>
+              </mat-form-field>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button mat-stroked-button color="warn" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="boton-subir"  mat-stroked-button>Enviar a moderación</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="progreso" *ngIf="subiendo">
+  <p class="mb-1 text-center">Subiendo ficheros: {{progreso}}%</p>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" [style.width]="progreso+'%'"></div>
+  </div>
+</div>
